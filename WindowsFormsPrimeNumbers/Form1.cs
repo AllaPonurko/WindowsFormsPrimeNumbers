@@ -38,12 +38,12 @@ namespace WindowsFormsPrimeNumbers
             {
                 MessageBox.Show("Не задано конечное значение!! ");
             }
-            if(Convert.ToInt32(txtEnd.Text)<Convert.ToInt32(txtStart.Text))
+            if( Convert.ToInt32(txtEnd.Text)<Convert.ToInt32(txtStart.Text))
             {
                 MessageBox.Show("Задан неверный интервал!!");
                 return;
             }
-            my.task = new Task(MyTask.Mystart);
+            //my.task = new Task(MyTask.Mystart);
             my.task.Start();
             Thread.Sleep(1000);
             tasks.Add(my.task);
@@ -62,7 +62,14 @@ namespace WindowsFormsPrimeNumbers
                 listBoxTasks.Items.Add(item.Id + " " + item.Status);
                 if (item.IsCompleted == true)
                     listBoxTasks.Items.Add(" Задача завершена успешно!");
+                if(item.IsCanceled==true)
+                    listBoxTasks.Items.Add(" Задача была отменена!");
             }
+        }
+
+        private void btnCancel_Click(object sender, EventArgs e)
+        {
+            my.CancelTask();
         }
     }
 }

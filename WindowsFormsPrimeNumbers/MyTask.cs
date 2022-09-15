@@ -4,6 +4,7 @@ using System.Linq;
 using System.Text;
 using System.Threading;
 using System.Threading.Tasks;
+using System.Windows.Forms;
 
 namespace WindowsFormsPrimeNumbers
 {
@@ -14,6 +15,8 @@ namespace WindowsFormsPrimeNumbers
         public Task task;
         static public Action Mystart = new Action(Generete);
         public static List<int> vs;
+        static CancellationTokenSource source = new CancellationTokenSource();
+        static CancellationToken token = source.Token;
         static public void Generete()
         {
             vs.Clear();
@@ -34,6 +37,13 @@ namespace WindowsFormsPrimeNumbers
         public MyTask()
         {
             vs = new List<int>();
+            task = new Task(Mystart, token);
+        }
+        public void CancelTask()
+        {  
+            source.Cancel();
+            MessageBox.Show("Задача отменена");
+            source.Dispose();
         }
     }
 }
